@@ -26,7 +26,6 @@
   "require": {
     "php": "^8",
     "opis/closure": "^3.6",
-    "psr/log": "^1.1",
     "symfony/process": "^5.2"
   },
   "require-dev": {
