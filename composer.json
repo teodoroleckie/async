@@ -1,7 +1,7 @@
 {
   "name": "tleckie/async",
   "license": "MIT",
-  "description": "Async php-8",
+  "description": "Asynchronous and parallel PHP",
   "type": "library",
   "homepage": "https://github.com/teodoroleckie/async",
   "authors": [
@@ -31,7 +31,6 @@
   "require-dev": {
     "infection/infection": "^0.21.5",
     "phpunit/phpunit": "^9.5",
-    "mikey179/vfsstream": "^1.6",
     "friendsofphp/php-cs-fixer": "v3.0.0-beta.2"
   },
   "config": {
@@ -39,6 +38,10 @@
     "optimize-autoloader": true,
     "vendor-dir": "vendor",
     "bin-dir": "bin"
+  },
+  "suggest": {
+    "ext-pcntl": "Required to use async processes",
+    "ext-posix": "Required to use async processes"
   },
   "scripts": {
     "php-cs-fixer-src": "./bin/php-cs-fixer fix src/ ",
