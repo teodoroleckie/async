@@ -36,7 +36,9 @@ class AsyncTest extends TestCase
             return 2;
         });
 
-        static::assertEquals([2, 555], $this->async->wait());
+        $values = $this->async->wait();
+        static::assertContainsEquals(555, $values);
+        static::assertContainsEquals(2, $values);
     }
 
     /**

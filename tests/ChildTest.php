@@ -2,7 +2,6 @@
 
 namespace Tleckie\Async\Tests;
 
-use Exception;
 use Opis\Closure\SerializableClosure;
 use PHPUnit\Framework\TestCase;
 use Tleckie\Async\Child;
@@ -56,7 +55,7 @@ class ChildTest extends TestCase
     public function handleException(): void
     {
         $closure = function () {
-            throw new Exception('Test message');
+            throw new \Exception('Test message');
         };
 
         $encode = $this->encoder->encode(new SerializableClosure($closure));
