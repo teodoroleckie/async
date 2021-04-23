@@ -10,6 +10,12 @@
       "email": "teodoroleckie@gmail.com"
     }
   ],
+  "keywords": [
+    "tleckie",
+    "async",
+    "asynchronous php",
+    "parallel php"
+  ],
   "autoload": {
     "psr-4": {
       "Tleckie\\Async\\": "src/"
