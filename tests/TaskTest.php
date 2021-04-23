@@ -20,7 +20,7 @@ class TaskTest extends TestCase
     private Task $task;
 
     /** @var Process|MockObject */
-    private Process $processMock;
+    private Process|MockObject $processMock;
 
 
     public function setUp(): void
