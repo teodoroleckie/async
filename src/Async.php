@@ -2,8 +2,6 @@
 
 namespace Tleckie\Async;
 
-use Exception;
-
 /**
  * Class Async
  *
@@ -12,45 +10,45 @@ use Exception;
  */
 class Async
 {
-    /** @var array */
-    protected array $pendingQueue = [];
+    /** @var TaskInterface[] */
+    private array $pendingQueue = [];
 
-    /** @var array */
-    protected array $progressQueue = [];
+    /** @var TaskInterface[] */
+    private array $progressQueue = [];
 
-    /** @var array */
-    protected array $finishedQueue = [];
+    /** @var TaskInterface[] */
+    private array $finishedQueue = [];
 
-    /** @var array */
-    protected array $failedQueue = [];
+    /** @var TaskInterface[] */
+    private array $failedQueue = [];
 
-    /** @var TaskFactory */
-    private TaskFactory $taskFactory;
+    /** @var TaskFactoryInterface */
+    private TaskFactoryInterface $taskFactory;
 
-    /** @var Encoder  */
-    private  Encoder $encoder;
+    /** @var Encoder */
+    private Encoder $encoder;
 
-    /** @var array  */
+    /** @var mixed[] */
     private array $results = [];
 
-    /** @var int  */
+    /** @var int */
     private int $sleep;
 
     /**
      * Async constructor.
      *
-     * @param TaskFactory|null $taskFactory
-     * @param int|null         $sleep
-     * @param Encoder|null     $encoder
+     * @param TaskFactoryInterface|null $taskFactory
+     * @param Encoder|null              $encoder
+     * @param int|null                  $sleep
      */
     public function __construct(
-        ?TaskFactory $taskFactory = null,
-        ?int $sleep = 50,
-        ?Encoder $encoder = null
+        ?TaskFactoryInterface $taskFactory = null,
+        ?Encoder $encoder = null,
+        ?int $sleep = 50
     )
     {
         $this->taskFactory = $taskFactory ?? new TaskFactory();
-        $this->encoder = $encoder?? new Encoder();
+        $this->encoder = $encoder ?? new Encoder();
         $this->sleep = $sleep;
 
         $this->listener();
@@ -59,7 +57,6 @@ class Async
     private function listener(): void
     {
         pcntl_async_signals(true);
-
         pcntl_signal(SIGCHLD, function ($signo, $status) {
             while (true) {
                 $pid = pcntl_waitpid(-1, $processState, WNOHANG | WUNTRACED);
@@ -68,11 +65,8 @@ class Async
                 }
 
                 $process = $this->progressQueue[$pid] ?? null;
-                if (!$process) {
-                    continue;
-                }
 
-                if (!$status['status']) {
+                if (!$process || 0 === $status['status']) {
                     $this->finished($process);
                     continue;
                 }
@@ -92,7 +86,7 @@ class Async
 
         $this->notify();
 
-        $this->results[] = $task->handle();
+        $this->results[] = $task->handle()->output();
 
         $this->finishedQueue[$task->pid()] = $task;
 
@@ -114,22 +108,7 @@ class Async
      * @param TaskInterface $task
      * @return TaskInterface
      */
-    public function failed(TaskInterface $task): TaskInterface
-    {
-        unset($this->progressQueue[$task->pid()]);
-
-        $this->notify();
-
-        $this->failedQueue[$task->pid()] = $task->error();
-
-        return $task;
-    }
-
-    /**
-     * @param TaskInterface $task
-     * @return TaskInterface
-     */
-    public function progress(TaskInterface $task): TaskInterface
+    private function progress(TaskInterface $task): TaskInterface
     {
         $task->start();
 
@@ -141,10 +120,25 @@ class Async
     }
 
     /**
-     * @param $process
+     * @param TaskInterface $task
      * @return TaskInterface
      */
-    public function add($process): TaskInterface
+    private function failed(TaskInterface $task): TaskInterface
+    {
+        unset($this->progressQueue[$task->pid()]);
+
+        $this->notify();
+
+        $this->failedQueue[$task->pid()] = $task->error();
+
+        return $task;
+    }
+
+    /**
+     * @param callable $process
+     * @return TaskInterface
+     */
+    public function add(callable $process): TaskInterface
     {
         $task = $this->taskFactory->createTask($process, $this->encoder);
 

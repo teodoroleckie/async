@@ -2,8 +2,8 @@
 
 namespace Tleckie\Async;
 
-use function \unserialize;
-use function \base64_decode;
+use function base64_decode;
+use function unserialize;
 
 /**
  * Class Encoder
@@ -11,8 +11,8 @@ use function \base64_decode;
  * @package Tleckie\Async
  * @author  Teodoro Leckie Westberg <teodoroleckie@gmail.com>
  */
-class Encoder {
-
+class Encoder
+{
     /**
      * @param mixed $object
      * @return string|null
@@ -30,5 +30,4 @@ class Encoder {
     {
         return @unserialize(base64_decode($string));
     }
-
 }

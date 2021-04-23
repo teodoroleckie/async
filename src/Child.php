@@ -2,6 +2,8 @@
 
 namespace Tleckie\Async;
 
+use Exception;
+
 /**
  * Class Child
  *
@@ -10,7 +12,6 @@ namespace Tleckie\Async;
  */
 class Child
 {
-
     /** @var Encoder */
     private Encoder $encoder;
 
@@ -37,11 +38,9 @@ class Child
     public function handle(?string $encoded): self
     {
         try {
-
             $task = $this->encoder->decode($encoded);
             $this->output = $this->encoder->encode($task());
-
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->exception = $this->encoder->encode($exception);
         }
 
@@ -49,9 +48,9 @@ class Child
     }
 
     /**
-     * @return \Exception|null
+     * @return mixed
      */
-    public function exception(): ?\Exception
+    public function exception(): mixed
     {
         return $this->exception;
     }
@@ -69,9 +68,17 @@ class Child
      */
     public function write(): self
     {
-        fwrite(STDOUT, ($this->exception) ?? $this->output);
+        fwrite(($this->hasError()) ? STDERR : STDOUT, ($this->exception) ?? $this->output);
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasError(): bool
+    {
+        return isset($this->exception);
     }
 
     /**

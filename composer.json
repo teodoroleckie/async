@@ -1,7 +1,7 @@
 {
   "name": "tleckie/async",
   "license": "MIT",
-  "description": "",
+  "description": "Async php-8",
   "type": "library",
   "homepage": "https://github.com/teodoroleckie/async",
   "authors": [
@@ -26,13 +26,15 @@
   "require": {
     "php": "^8",
     "opis/closure": "^3.6",
+    "spatie/async": "^1.5",
     "symfony/process": "^5.2"
   },
   "require-dev": {
     "infection/infection": "^0.21.5",
     "phpunit/phpunit": "^9.5",
     "mikey179/vfsstream": "^1.6",
-    "friendsofphp/php-cs-fixer": "v3.0.0-beta.2"
+    "friendsofphp/php-cs-fixer": "v3.0.0-beta.2",
+    "symfony/stopwatch": "^4.0 || ^5.0"
   },
   "config": {
     "sort-packages": true,
@@ -41,8 +43,15 @@
     "bin-dir": "bin"
   },
   "scripts": {
-    "php-cs-fixer": "php-cs-fixer --rules=@PSR1",
-    "test": "bin/phpunit ./tests/"
+    "php-cs-fixer-src": "./bin/php-cs-fixer fix src/ ",
+    "php-cs-fixer-test": "./bin/php-cs-fixer fix tests/",
+    "infection": "./bin/infection",
+    "tests": "./bin/phpunit ./tests/",
+    "check": [
+      "@php-cs-fixer-src",
+      "@php-cs-fixer-test",
+      "@tests"
+    ]
   },
   "bin": [
     "bin/child"

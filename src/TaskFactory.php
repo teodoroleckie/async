@@ -11,7 +11,7 @@ use Symfony\Component\Process\Process;
  * @package Tleckie\Async
  * @author  Teodoro Leckie Westberg <teodoroleckie@gmail.com>
  */
-class TaskFactory
+class TaskFactory implements TaskFactoryInterface
 {
     /** @var int */
     private int $pid = 0;
@@ -19,10 +19,10 @@ class TaskFactory
     /** @var int */
     private int $index = 0;
 
-    /** @var string|null  */
+    /** @var string|null */
     private string|null $script = null;
 
-    /** @var string|null  */
+    /** @var string|null */
     private string|null $autoloader = null;
 
     /**
@@ -32,26 +32,6 @@ class TaskFactory
     {
         $this->findAutoload()
             ->findScript();
-    }
-
-    /**
-     * @return $this
-     */
-    private function findAutoload(): self
-    {
-        if (!$this->autoloader) {
-            $paths = array_filter([
-                __DIR__ . '/../../../../vendor/autoload.php',
-                __DIR__ . '/../../../vendor/autoload.php',
-                __DIR__ . '/../../vendor/autoload.php',
-                __DIR__ . '/../vendor/autoload.php',
-            ], static function (string $path) {
-                return file_exists($path);
-            });
-            $this->autoloader = reset($paths);
-        }
-
-        return $this;
     }
 
     /**
@@ -77,10 +57,27 @@ class TaskFactory
     }
 
     /**
-     * @param         $process
-     * @param Encoder $encoder
-     * @param string  $binary
-     * @return TaskInterface
+     * @return $this
+     */
+    private function findAutoload(): self
+    {
+        if (!$this->autoloader) {
+            $paths = array_filter([
+                __DIR__ . '/../../../../vendor/autoload.php',
+                __DIR__ . '/../../../vendor/autoload.php',
+                __DIR__ . '/../../vendor/autoload.php',
+                __DIR__ . '/../vendor/autoload.php',
+            ], static function (string $path) {
+                return file_exists($path);
+            });
+            $this->autoloader = reset($paths);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function createTask(
         $process,
@@ -88,6 +85,7 @@ class TaskFactory
         $binary = PHP_BINARY
     ): TaskInterface
     {
+
         $process = new Process([
             $binary,
             $this->script,

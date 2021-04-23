@@ -1,7 +1,8 @@
-<?php /** @noinspection UnserializeExploitsInspection */
+<?php
+
+/** @noinspection UnserializeExploitsInspection */
 
 namespace Tleckie\Async;
-
 
 use Symfony\Component\Process\Process;
 
@@ -13,20 +14,14 @@ use Symfony\Component\Process\Process;
  */
 class Task implements TaskInterface
 {
-    /** @var Process */
-    private Process $process;
-
     /** @var int */
     private int $id;
 
     /** @var int */
     private int $pid;
 
-    /** @var mixed */
-    private mixed $output = null;
-
-    /** @var mixed */
-    private mixed $errorOutput = null;
+    /** @var Process */
+    private Process $process;
 
     /** @var callable[] */
     private array $success = [];
@@ -37,6 +32,12 @@ class Task implements TaskInterface
     /** @var Encoder */
     private Encoder $encoder;
 
+    /** @var mixed */
+    private mixed $output = null;
+
+    /** @var mixed */
+    private mixed $errorOutput = null;
+
     /**
      * Task constructor.
      *
@@ -44,21 +45,15 @@ class Task implements TaskInterface
      * @param Encoder $encoder
      * @param int     $id
      */
-    public function __construct(Process $process, Encoder $encoder, int $id)
+    public function __construct(
+        Process $process,
+        Encoder $encoder,
+        int $id
+    )
     {
         $this->process = $process;
         $this->encoder = $encoder;
         $this->id = $id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function stop($timeout = 0): self
-    {
-        $this->process->stop($timeout, SIGKILL);
-
-        return $this;
     }
 
     /**
@@ -127,7 +122,10 @@ class Task implements TaskInterface
         return $this;
     }
 
-    public function getErrorOutput()
+    /**
+     * @inheritdoc
+     */
+    public function getErrorOutput(): mixed
     {
         if (!$this->errorOutput) {
             $output = $this->process->getErrorOutput();
@@ -188,5 +186,4 @@ class Task implements TaskInterface
     {
         return $this->process->isTerminated();
     }
-
 }

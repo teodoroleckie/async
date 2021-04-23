@@ -21,12 +21,6 @@ interface TaskInterface
     public function pid(): int;
 
     /**
-     * @param int $timeout
-     * @return $this
-     */
-    public function stop($timeout = 0): self;
-
-    /**
      * @return $this
      */
     public function start(): self;
@@ -46,7 +40,7 @@ interface TaskInterface
     /**
      * @return $this
      */
-    public function handle():self;
+    public function handle(): self;
 
     /**
      * @return $this
@@ -72,4 +66,9 @@ interface TaskInterface
      * @return mixed
      */
     public function output(): mixed;
+
+    /**
+     * @return mixed
+     */
+    public function getErrorOutput(): mixed;
 }
