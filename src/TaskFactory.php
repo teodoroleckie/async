@@ -92,23 +92,10 @@ class TaskFactory
             $binary,
             $this->script,
             $this->autoloader,
-            $this->encode($process),
-            null,
+            $encoder->encode(new SerializableClosure($process))
         ]);
 
         return new Task($process, $encoder, $this->id());
-    }
-
-    /**
-     * @param callable $process
-     * @return string
-     */
-    private function encode(callable $process): string
-    {
-        return base64_encode(serialize(
-                new SerializableClosure($process)
-            )
-        );
     }
 
     /**
