@@ -2,10 +2,8 @@
 
 namespace Tleckie\Async;
 
-
 use Opis\Closure\SerializableClosure;
 use Symfony\Component\Process\Process;
-use function Opis\Closure\serialize;
 
 /**
  * Class TaskFactory

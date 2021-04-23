@@ -25,6 +25,7 @@
   },
   "require": {
     "php": "^8",
+    "opis/closure": "^3.6",
     "psr/log": "^1.1",
     "symfony/process": "^5.2"
   },
@@ -32,8 +33,7 @@
     "infection/infection": "^0.21.5",
     "phpunit/phpunit": "^9.5",
     "mikey179/vfsstream": "^1.6",
-    "friendsofphp/php-cs-fixer": "v3.0.0-beta.2",
-    "opis/closure": "^3.4.2"
+    "friendsofphp/php-cs-fixer": "v3.0.0-beta.2"
   },
   "config": {
     "sort-packages": true,
