@@ -45,8 +45,7 @@ class Async
         ?TaskFactoryInterface $taskFactory = null,
         ?Encoder $encoder = null,
         ?int $sleep = 50
-    )
-    {
+    ) {
         $this->taskFactory = $taskFactory ?? new TaskFactory();
         $this->encoder = $encoder ?? new Encoder();
         $this->sleep = $sleep;

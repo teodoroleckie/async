@@ -83,9 +83,7 @@ class TaskFactory implements TaskFactoryInterface
         $process,
         Encoder $encoder,
         $binary = PHP_BINARY
-    ): TaskInterface
-    {
-
+    ): TaskInterface {
         $process = new Process([
             $binary,
             $this->script,

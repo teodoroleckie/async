@@ -49,8 +49,7 @@ class Task implements TaskInterface
         Process $process,
         Encoder $encoder,
         int $id
-    )
-    {
+    ) {
         $this->process = $process;
         $this->encoder = $encoder;
         $this->id = $id;
