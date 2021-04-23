@@ -1,0 +1,51 @@
+{
+  "name": "tleckie/async",
+  "license": "MIT",
+  "description": "",
+  "type": "library",
+  "homepage": "https://github.com/teodoroleckie/async",
+  "authors": [
+    {
+      "name": "Teodoro Leckie Westberg",
+      "email": "teodoroleckie@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Tleckie\\Async\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tleckie\\Async\\Tests\\": "tests/"
+    }
+  },
+  "provide": {
+
+  },
+  "require": {
+    "php": "^8",
+    "psr/log": "^1.1",
+    "symfony/process": "^5.2"
+  },
+  "require-dev": {
+    "infection/infection": "^0.21.5",
+    "phpunit/phpunit": "^9.5",
+    "mikey179/vfsstream": "^1.6",
+    "friendsofphp/php-cs-fixer": "v3.0.0-beta.2",
+    "opis/closure": "^3.4.2"
+  },
+  "config": {
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "vendor-dir": "vendor",
+    "bin-dir": "bin"
+  },
+  "scripts": {
+    "php-cs-fixer": "php-cs-fixer --rules=@PSR1",
+    "test": "bin/phpunit ./tests/"
+  },
+  "bin": [
+    "bin/child"
+  ]
+}

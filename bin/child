@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+$autoloader = $argv[1] ?? null;
+$serializedClosure = $argv[2] ?? null;
+$autoloader = "/var/www/Librerias/async/vendor/autoload.php";
+
+use Tleckie\Async\Child;
+use Tleckie\Async\Encoder;
+
+include_once $autoloader;
+
+
+
+$child = new Child(new Encoder);
+$child->handle($serializedClosure)
+    ->write()
+    ->close();
+
