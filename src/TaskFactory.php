@@ -30,50 +30,25 @@ class TaskFactory implements TaskFactoryInterface
      */
     public function __construct()
     {
-        $this->findAutoload()
-            ->findScript();
+        $this->autoloader = $this->find('vendor/autoload.php');
+        $this->script = $this->find('bin/child');
     }
 
     /**
-     * @return $this
+     * @param string $file
+     * @return string|null
      */
-    private function findScript(): self
+    protected function find(string $file): ?string
     {
-        if (!$this->script) {
-            $paths = array_filter([
-                __DIR__ . '/../../../../bin/child',
-                __DIR__ . '/../../../bin/child',
-                __DIR__ . '/../../bin/child',
-                __DIR__ . '/../bin/child',
-                __DIR__ . '/bin/child',
-
-            ], static function (string $path) {
-                return file_exists($path);
-            });
-            $this->script = reset($paths);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    private function findAutoload(): self
-    {
-        if (!$this->autoloader) {
-            $paths = array_filter([
-                __DIR__ . '/../../../../vendor/autoload.php',
-                __DIR__ . '/../../../vendor/autoload.php',
-                __DIR__ . '/../../vendor/autoload.php',
-                __DIR__ . '/../vendor/autoload.php',
-            ], static function (string $path) {
-                return file_exists($path);
-            });
-            $this->autoloader = reset($paths);
-        }
-
-        return $this;
+        $paths = array_filter([
+            __DIR__ . '/../../../../'.$file,
+            __DIR__ . '/../../../'.$file,
+            __DIR__ . '/../../'.$file,
+            __DIR__ . '/../'.$file,
+        ], static function (string $path) {
+            return file_exists($path);
+        });
+        return reset($paths);
     }
 
     /**
@@ -97,7 +72,7 @@ class TaskFactory implements TaskFactoryInterface
     /**
      * @return string
      */
-    private function id(): string
+    protected function id(): string
     {
         return (++$this->index) . $this->pid();
     }
@@ -105,7 +80,7 @@ class TaskFactory implements TaskFactoryInterface
     /**
      * @return string
      */
-    private function pid(): string
+    protected function pid(): string
     {
         $this->pid = $this->pid ?? getmypid();
 

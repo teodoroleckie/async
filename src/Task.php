@@ -103,7 +103,7 @@ class Task implements TaskInterface
      * @param callable $callback
      * @param array    $arguments
      */
-    private function call(callable $callback, array $arguments): void
+    protected function call(callable $callback, array $arguments): void
     {
         call_user_func_array($callback, $arguments);
     }

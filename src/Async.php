@@ -11,28 +11,28 @@ namespace Tleckie\Async;
 class Async
 {
     /** @var TaskInterface[] */
-    private array $pendingQueue = [];
+    protected array $pendingQueue = [];
 
     /** @var TaskInterface[] */
-    private array $progressQueue = [];
+    protected array $progressQueue = [];
 
     /** @var TaskInterface[] */
-    private array $finishedQueue = [];
+    protected array $finishedQueue = [];
 
     /** @var TaskInterface[] */
-    private array $failedQueue = [];
+    protected array $failedQueue = [];
 
     /** @var TaskFactoryInterface */
-    private TaskFactoryInterface $taskFactory;
+    protected TaskFactoryInterface $taskFactory;
 
     /** @var Encoder */
-    private Encoder $encoder;
+    protected Encoder $encoder;
 
     /** @var mixed[] */
-    private array $results = [];
+    protected array $results = [];
 
     /** @var int */
-    private int $sleep;
+    protected int $sleep;
 
     /**
      * Async constructor.
@@ -44,7 +44,7 @@ class Async
     public function __construct(
         ?TaskFactoryInterface $taskFactory = null,
         ?Encoder $encoder = null,
-        ?int $sleep = 50
+        ?int $sleep = 5000
     ) {
         $this->taskFactory = $taskFactory ?? new TaskFactory();
         $this->encoder = $encoder ?? new Encoder();
@@ -53,7 +53,7 @@ class Async
         $this->listener();
     }
 
-    private function listener(): void
+    protected function listener(): void
     {
         pcntl_async_signals(true);
         pcntl_signal(SIGCHLD, function ($signo, $status) {
@@ -79,7 +79,7 @@ class Async
      * @param TaskInterface $task
      * @return TaskInterface
      */
-    private function finished(TaskInterface $task): TaskInterface
+    protected function finished(TaskInterface $task): TaskInterface
     {
         unset($this->progressQueue[$task->pid()]);
 
@@ -92,7 +92,7 @@ class Async
         return $task;
     }
 
-    private function notify(): void
+    protected function notify(): void
     {
         $process = array_shift($this->pendingQueue);
 
@@ -107,7 +107,7 @@ class Async
      * @param TaskInterface $task
      * @return TaskInterface
      */
-    private function progress(TaskInterface $task): TaskInterface
+    protected function progress(TaskInterface $task): TaskInterface
     {
         $task->start();
 
@@ -122,7 +122,7 @@ class Async
      * @param TaskInterface $task
      * @return TaskInterface
      */
-    private function failed(TaskInterface $task): TaskInterface
+    protected function failed(TaskInterface $task): TaskInterface
     {
         unset($this->progressQueue[$task->pid()]);
 
@@ -148,7 +148,7 @@ class Async
      * @param TaskInterface $task
      * @return TaskInterface
      */
-    private function pending(TaskInterface $task): TaskInterface
+    protected function pending(TaskInterface $task): TaskInterface
     {
         $this->pendingQueue[$task->id()] = $task;
 
