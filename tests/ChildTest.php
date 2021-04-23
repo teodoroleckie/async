@@ -19,7 +19,7 @@ class ChildTest extends TestCase
     /** @var Child */
     private Child $child;
 
-    /** @var Encoder  */
+    /** @var Encoder */
     private Encoder $encoder;
 
     public function setUp(): void

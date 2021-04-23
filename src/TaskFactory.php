@@ -41,13 +41,14 @@ class TaskFactory implements TaskFactoryInterface
     protected function find(string $file): ?string
     {
         $paths = array_filter([
-            __DIR__ . '/../../../../'.$file,
-            __DIR__ . '/../../../'.$file,
-            __DIR__ . '/../../'.$file,
-            __DIR__ . '/../'.$file,
+            __DIR__ . '/../../../../' . $file,
+            __DIR__ . '/../../../' . $file,
+            __DIR__ . '/../../' . $file,
+            __DIR__ . '/../' . $file,
         ], static function (string $path) {
             return file_exists($path);
         });
+
         return reset($paths);
     }
 

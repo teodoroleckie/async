@@ -2,6 +2,7 @@
 
 namespace Tleckie\Async\Tests;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Tleckie\Async\Async;
 
@@ -58,7 +59,7 @@ class AsyncTest extends TestCase
     public function failed(): void
     {
         $this->async->add(static function () {
-            throw new \Exception('Test message');
+            throw new Exception('Test message');
         })->catch(function ($exception) {
             static::assertEquals('Test message', $exception->getMessage());
         });
