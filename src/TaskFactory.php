@@ -19,11 +19,11 @@ class TaskFactory implements TaskFactoryInterface
     /** @var int */
     protected int $index = 0;
 
-    /** @var string|null */
-    protected string|null $script = null;
+    /** @var string */
+    protected string $script;
 
-    /** @var string|null */
-    protected string|null $autoloader = null;
+    /** @var string */
+    protected string $autoloader;
 
     /**
      * TaskFactory constructor.
@@ -36,9 +36,9 @@ class TaskFactory implements TaskFactoryInterface
 
     /**
      * @param string $file
-     * @return string|null
+     * @return string
      */
-    protected function find(string $file): ?string
+    protected function find(string $file): string
     {
         $paths = array_filter([
             __DIR__ . '/../../../../' . $file,
@@ -71,17 +71,17 @@ class TaskFactory implements TaskFactoryInterface
     }
 
     /**
-     * @return string
+     * @return int
      */
-    protected function id(): string
+    protected function id(): int
     {
         return (++$this->index) . $this->pid();
     }
 
     /**
-     * @return string
+     * @return int
      */
-    protected function pid(): string
+    protected function pid(): int
     {
         $this->pid = $this->pid ?? getmypid();
 
