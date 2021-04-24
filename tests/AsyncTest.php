@@ -9,6 +9,7 @@ use Tleckie\Async\Async;
 /**
  * Class AsyncTest
  *
+ * @backupGlobals disabled
  * @package Tleckie\Async\Tests
  * @author  Teodoro Leckie Westberg <teodoroleckie@gmail.com>
  */
