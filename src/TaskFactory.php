@@ -14,16 +14,16 @@ use Symfony\Component\Process\Process;
 class TaskFactory implements TaskFactoryInterface
 {
     /** @var int */
-    private int $pid = 0;
+    protected int $pid = 0;
 
     /** @var int */
-    private int $index = 0;
+    protected int $index = 0;
 
     /** @var string|null */
-    private string|null $script = null;
+    protected string|null $script = null;
 
     /** @var string|null */
-    private string|null $autoloader = null;
+    protected string|null $autoloader = null;
 
     /**
      * TaskFactory constructor.

@@ -50,13 +50,13 @@
     "ext-posix": "Required to use async processes"
   },
   "scripts": {
-    "php-cs-fixer-src": "./bin/php-cs-fixer fix src/ ",
-    "php-cs-fixer-test": "./bin/php-cs-fixer fix tests/",
+    "fix-src": "./bin/php-cs-fixer fix src/ ",
+    "fix-tests": "./bin/php-cs-fixer fix tests/",
     "infection": "./bin/infection",
     "tests": "./bin/phpunit ./tests/",
     "check": [
-      "@php-cs-fixer-src",
-      "@php-cs-fixer-test",
+      "@fix-src",
+      "@fix-tests",
       "@tests"
     ]
   },

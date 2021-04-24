@@ -15,28 +15,28 @@ use Symfony\Component\Process\Process;
 class Task implements TaskInterface
 {
     /** @var int */
-    private int $id;
+    protected int $id;
 
     /** @var int */
-    private int $pid;
+    protected int $pid;
 
     /** @var Process */
-    private Process $process;
+    protected Process $process;
 
     /** @var callable[] */
-    private array $success = [];
+    protected array $success = [];
 
     /** @var callable[] */
-    private array $error = [];
+    protected array $error = [];
 
     /** @var Encoder */
-    private Encoder $encoder;
+    protected Encoder $encoder;
 
     /** @var mixed */
-    private mixed $output = null;
+    protected mixed $output = null;
 
     /** @var mixed */
-    private mixed $errorOutput = null;
+    protected mixed $errorOutput = null;
 
     /**
      * Task constructor.

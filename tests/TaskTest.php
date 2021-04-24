@@ -22,7 +22,6 @@ class TaskTest extends TestCase
     /** @var Process|MockObject */
     private Process|MockObject $processMock;
 
-
     public function setUp(): void
     {
         $this->processMock = $this->createMock(Process::class);
