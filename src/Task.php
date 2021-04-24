@@ -32,12 +32,6 @@ class Task implements TaskInterface
     /** @var Encoder */
     protected Encoder $encoder;
 
-    /** @var mixed */
-    protected mixed $output = null;
-
-    /** @var mixed */
-    protected mixed $errorOutput = null;
-
     /**
      * Task constructor.
      *
@@ -65,6 +59,10 @@ class Task implements TaskInterface
         return $this;
     }
 
+    /**
+     * @param callable $callback
+     * @return $this
+     */
     public function catch(callable $callback): self
     {
         $this->error[] = $callback;
@@ -91,12 +89,9 @@ class Task implements TaskInterface
      */
     public function output(): mixed
     {
-        if (!$this->output) {
-            $output = $this->process->getOutput();
-            $this->output = $this->encoder->decode($output) ?? $output;
-        }
-
-        return $this->output;
+        return $this->encoder->decode(
+            $this->process->getOutput()
+        );
     }
 
     /**
@@ -126,12 +121,9 @@ class Task implements TaskInterface
      */
     public function getErrorOutput(): mixed
     {
-        if (!$this->errorOutput) {
-            $output = $this->process->getErrorOutput();
-            $this->errorOutput = $this->encoder->decode($output) ?? $output;
-        }
-
-        return $this->errorOutput;
+        return $this->encoder->decode(
+            $this->process->getErrorOutput()
+        );
     }
 
     /**
