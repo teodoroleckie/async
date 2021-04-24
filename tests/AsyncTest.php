@@ -5,13 +5,15 @@ namespace Tleckie\Async\Tests;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Tleckie\Async\Async;
+use Tleckie\Async\TaskFactoryInterface;
+use Tleckie\Async\TaskInterface;
 
 /**
  * Class AsyncTest
  *
  * @backupGlobals disabled
- * @package Tleckie\Async\Tests
- * @author  Teodoro Leckie Westberg <teodoroleckie@gmail.com>
+ * @package       Tleckie\Async\Tests
+ * @author        Teodoro Leckie Westberg <teodoroleckie@gmail.com>
  */
 class AsyncTest extends TestCase
 {
@@ -71,4 +73,5 @@ class AsyncTest extends TestCase
 
         $this->async->wait();
     }
+
 }
