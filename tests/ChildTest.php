@@ -31,6 +31,7 @@ class ChildTest extends TestCase
 
     /**
      * @test
+     * @runTestsInSeparateProcesses
      */
     public function handle(): void
     {
