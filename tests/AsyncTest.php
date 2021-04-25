@@ -58,20 +58,4 @@ class AsyncTest extends TestCase
 
         $this->async->wait();
     }
-
-    /**
-     * @test
-     * @runTestsInSeparateProcesses
-     */
-    public function failed(): void
-    {
-        $this->async->add(static function () {
-            throw new Exception('Test message');
-        })->catch(function ($exception) {
-            static::assertEquals('Test message', $exception->getMessage());
-        });
-
-        $this->async->wait();
-    }
-
 }

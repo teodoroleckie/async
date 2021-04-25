@@ -2,6 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tleckie/async.svg?style=flat-square)](https://packagist.org/packages/tleckie/async)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/teodoroleckie/async/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/teodoroleckie/async/?branch=main)
+[![Build Status](https://scrutinizer-ci.com/g/teodoroleckie/async/badges/build.png?b=main)](https://scrutinizer-ci.com/g/teodoroleckie/async/build-status/main)
 [![Total Downloads](https://img.shields.io/packagist/dt/tleckie/async.svg?style=flat-square)](https://packagist.org/packages/tleckie/async)
 
 
