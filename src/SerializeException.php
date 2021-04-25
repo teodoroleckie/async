@@ -2,8 +2,12 @@
 
 namespace Tleckie\Async;
 
+use ReflectionException;
+use ReflectionObject;
 use Serializable;
 use Throwable;
+use function serialize;
+use function unserialize;
 
 /**
  * Class SerializeException
@@ -26,10 +30,13 @@ class SerializeException implements Serializable
      */
     public function __construct(Throwable $exception)
     {
-        $this->data[] = get_class($exception);
-        $this->data[] = sprintf("%s %s", $exception->getMessage(), $exception->getTraceAsString());
-        $this->data[] = $exception->getCode();
-        $this->data[] = $exception->getPrevious();
+        $this->data = [
+            get_class($exception),
+            $exception->getMessage(),
+            $exception->getCode(),
+            $exception->getPrevious(),
+            $exception->getTrace()
+        ];
     }
 
     /**
@@ -37,7 +44,7 @@ class SerializeException implements Serializable
      */
     public function serialize(): string
     {
-        return \serialize($this->data);
+        return serialize($this->data);
     }
 
     /**
@@ -50,18 +57,23 @@ class SerializeException implements Serializable
 
     /**
      * @param string $serialized
-     * @return Throwable
      */
     public function unserialize($serialized)
     {
-        $data = \unserialize($serialized);
-
-        [$className, $message, $code, $previous] = $data;
+        [$className, $message, $code, $previous, $trace] = unserialize($serialized, [\Exception::class]);
 
         $this->exception = new $className(
             $message,
             $code,
             $previous,
         );
+
+        try {
+            $reflectionObject = new ReflectionObject($this->exception);
+            $reflectionObjectProp = $reflectionObject->getProperty('trace');
+            $reflectionObjectProp->setAccessible(true);
+            $reflectionObjectProp->setValue($this->exception, $trace);
+        } catch (ReflectionException $exception) {
+        }
     }
 }
