@@ -4,9 +4,6 @@ namespace Tleckie\Async;
 
 use Throwable;
 
-use Exception;
-use Opis\Closure\SerializableClosure;
-use Tleckie\Async\SerializeException;
 /**
  * Class Child
  *

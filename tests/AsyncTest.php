@@ -5,8 +5,6 @@ namespace Tleckie\Async\Tests;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Tleckie\Async\Async;
-use Tleckie\Async\TaskFactoryInterface;
-use Tleckie\Async\TaskInterface;
 
 /**
  * Class AsyncTest
@@ -73,5 +71,4 @@ class AsyncTest extends TestCase
 
         $this->async->wait();
     }
-
 }

@@ -11,8 +11,8 @@ use Tleckie\Async\Encoder;
  * Class ChildTest
  *
  * @backupGlobals disabled
- * @package Tleckie\Async\Tests
- * @author  Teodoro Leckie Westberg <teodoroleckie@gmail.com>
+ * @package       Tleckie\Async\Tests
+ * @author        Teodoro Leckie Westberg <teodoroleckie@gmail.com>
  */
 class ChildTest extends TestCase
 {
