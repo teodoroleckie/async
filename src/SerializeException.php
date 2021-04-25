@@ -4,6 +4,7 @@ namespace Tleckie\Async;
 
 use Serializable;
 use Throwable;
+use Exception;
 
 /**
  * Class SerializeException
@@ -54,7 +55,7 @@ class SerializeException implements Serializable
      */
     public function unserialize($serialized)
     {
-        $data = \unserialize($serialized, [\Exception::class]);
+        $data = \unserialize($serialized, [Exception::class, Throwable::class]);
 
         [$className, $message, $code, $previous] = $data;
 
