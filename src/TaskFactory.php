@@ -75,7 +75,7 @@ class TaskFactory implements TaskFactoryInterface
      */
     protected function id(): int
     {
-        return (++$this->index) . $this->pid();
+        return (++$this->index) * $this->pid();
     }
 
     /**
@@ -85,6 +85,6 @@ class TaskFactory implements TaskFactoryInterface
     {
         $this->pid = $this->pid ?? getmypid();
 
-        return (string)$this->pid;
+        return $this->pid;
     }
 }
