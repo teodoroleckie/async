@@ -18,7 +18,7 @@ use function unserialize;
 class SerializeException implements Serializable
 {
     /** @var array */
-    private array $data = [];
+    private array $data;
 
     /** @var Throwable */
     private Throwable $exception;
