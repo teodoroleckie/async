@@ -2,8 +2,11 @@
 
 namespace Tleckie\Async;
 
-use Exception;
+use Throwable;
 
+use Exception;
+use Opis\Closure\SerializableClosure;
+use Tleckie\Async\SerializeException;
 /**
  * Class Child
  *
@@ -40,8 +43,8 @@ class Child
         try {
             $task = $this->encoder->decode($encoded);
             $this->output = $this->encoder->encode($task());
-        } catch (Exception $exception) {
-            $this->exception = $this->encoder->encode($exception);
+        } catch (Throwable $exception) {
+            $this->exception = $this->encoder->encode(new SerializeException($exception));
         }
 
         return $this;

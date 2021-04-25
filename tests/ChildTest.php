@@ -54,6 +54,26 @@ class ChildTest extends TestCase
     /**
      * @test
      */
+    public function handleException(): void
+    {
+        $closure = function () {
+            throw new \Exception('Test message');
+        };
+
+        $encode = $this->encoder->encode(new SerializableClosure($closure));
+
+        $output = $this->encoder->decode(
+            $this->child->handle($encode)->exception()
+        );
+
+        static::assertStringContainsString('Test message', $output->exception()->getMessage());
+        static::assertTrue($this->child->hasError());
+        static::assertNull($this->child->output());
+    }
+
+    /**
+     * @test
+     */
     public function write(): void
     {
         $closure = function () {

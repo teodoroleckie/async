@@ -108,9 +108,9 @@ class Task implements TaskInterface
      */
     public function error(): self
     {
-        $output = [$this->getErrorOutput()];
+        $output = $this->getErrorOutput();
         foreach ($this->error as $callback) {
-            $this->call($callback, $output);
+            $this->call($callback, [$output->exception()]);
         }
 
         return $this;
